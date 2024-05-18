@@ -1,3 +1,13 @@
+// Initialize the popup by loading stored settings
+document.addEventListener('DOMContentLoaded', () => {
+    // Load time threshold and exceptions
+    browser.storage.local.get(['exceptions']).then(data => {
+      if (data.exceptions) {
+        document.getElementById('exceptions').value = data.exceptions.join(',');
+      }
+    });
+  });
+  
 document.getElementById('clear').addEventListener('click', () => {
     const selectedTimeOption = document.querySelector('input[name="time"]:checked').value;
     if (selectedTimeOption === 'custom') {
@@ -6,7 +16,7 @@ document.getElementById('clear').addEventListener('click', () => {
     } else {
       timeThreshold = selectedTimeOption * 60 * 1000; // Convert minutes to milliseconds
     }
-    
+
     const exceptions = document.getElementById('exceptions').value.split(',').map(e => e.trim());
 
     browser.storage.local.set({ timeThreshold: timeThreshold, exceptions: exceptions });
