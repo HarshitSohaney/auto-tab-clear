@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clear Old Tabs</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <label for="time">Clear tabs older than</label>
+  <div class="time-options">
+    <input type="radio" name="time" value="5" id="5" checked>
+    <label for="5">5 minutes</label>
+    <input type="radio" name="time" value="60" id="60">
+    <label for="60">1 hour</label>
+    <input type="radio" name="time" value="1440" id="1440">
+    <label for="1440">1 day</label>
+    <input type="radio" name="time" value="10080" id="10080">
+    <label for="10080">1 week</label>
+    <label for="custom">Custom:</label>
+    <input type="number" id="custom" min="1" value="5">
+    <label for="custom">minutes</label>
+  </div>
+  <button id="clear">Clear Old Tabs</button>
+
+  <div id="auto-clear">
+    <label for="auto-clear">Automatically clear tabs older than:</label>
+    <input type="number" id="auto-clear-time" min="1" value="5">
+    <label for="auto-clear">minutes</label>
+    <input type="checkbox" id="auto-clear-checkbox">
+  </div>
+
+  <label for="exceptions">Exceptions (comma-separated domains):</label>
+  <input type="text" id="exceptions" placeholder="example.com,example.org">
+  
+  <script src="popup.js"></script>
+</body>
+</html>
