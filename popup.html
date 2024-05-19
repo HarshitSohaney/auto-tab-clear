@@ -5,27 +5,21 @@
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
+    <img src="icons/Logo.png" alt="Clear Old Tabs" id="icon">
   <label for="time">Clear tabs older than</label>
   <div class="time-options">
-    <input type="radio" name="time" value="5" id="5" checked>
-    <label for="5">5 minutes</label>
-    <input type="radio" name="time" value="60" id="60">
-    <label for="60">1 hour</label>
-    <input type="radio" name="time" value="1440" id="1440">
-    <label for="1440">1 day</label>
-    <input type="radio" name="time" value="10080" id="10080">
-    <label for="10080">1 week</label>
-    <label for="custom">Custom:</label>
-    <input type="number" id="custom" min="1" value="5">
-    <label for="custom">minutes</label>
+    <button class="time-btn" value="5">5 mins</button>
+    <button class="time-btn" value="60">1 hour</button>
+    <button class="time-btn" value="1440">1 day</button>
+    <button class="time-btn" value="10080">1 week</button>
   </div>
-  <button id="clear">Clear Old Tabs</button>
+  <button id="clear">Clear Tabs</button>
 
   <div id="auto-clear">
     <label for="auto-clear">Automatically clear tabs older than:</label>
     <input type="number" id="auto-clear-time" min="1" value="5">
     <label for="auto-clear">minutes</label>
-    <input type="checkbox" id="auto-clear-checkbox">
+    <input type="checkbox" id="auto-clear">
   </div>
 
   <label for="exceptions">Exceptions (comma-separated domains):</label>

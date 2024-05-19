@@ -11,16 +11,9 @@ label {
     font-weight: bold;
     color: #333;
 }
-  input[type="number"], input[type="text"] {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  button {
-    width: calc(100% - 22px);
+
+button {
+    width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     background-color: #007bff;
@@ -29,7 +22,45 @@ label {
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-  }
-  button:hover {
+}
+
+button:hover {
     background-color: #0056b3;
+}
+
+.time-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    background-color: #cfcfcf;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.time-options button {
+    width: 50px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    background-color: #8b8b8b;
+    /* align all text to center */
+    text-align: center;
   }
+  .time-options button.selected {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+  }
+
+#auto-clear-time {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    background-color: #cfcfcf;
+    padding: 10px;
+    border-radius: 12px;
+}
