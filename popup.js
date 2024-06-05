@@ -1,4 +1,5 @@
-let selectedTimeValue = 5 * 60 * 1000; // 5 minutes
+// 5 mins in ms
+let selectedTimeValue = 5 * 60 * 1000;
 
 // Initialize the popup by loading stored settings
 document.addEventListener("DOMContentLoaded", () => {
@@ -12,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // check if data.autoClear exists
     if (data.autoClear !== undefined) {
-        console.log(`Auto-clear setting loaded: ${data.autoClear}`);
+      console.log(`Auto-clear setting loaded: ${data.autoClear}`);
       document.getElementById('auto-clear').checked = data.autoClear;
     }
   });
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", () => {
       timeButtons.forEach((btn) => btn.classList.remove("selected"));
       button.classList.add("selected");
-      selectedTimeValue = button.getAttribute("data-value") * 60 * 1000;
+      selectedTimeValue = button.value * 60 * 1000;
     });
   });
 
@@ -52,8 +53,13 @@ document.getElementById("clear").addEventListener("click", () => {
 document.getElementById('auto-clear').addEventListener('click', (event) => {
     const autoClear = event.target.checked;
     console.log(`Auto-clear setting changed to: ${autoClear}`)
-    browser.storage.local.set({ autoClear });
-  
+    let clearTimeValue = document.getElementById('auto-clear-time').value;
+
+    browser.storage.local.set({
+      autoClear: autoClear,
+      autoClearTimeInMins: clearTimeValue
+    });
+
     if (autoClear) {
       scheduleRecurringClear();
     } else {
@@ -80,16 +86,17 @@ document.getElementById("add-current-tab").addEventListener("click", () => {
 });
 
 function scheduleRecurringClear() {
-  const endOfDay = new Date();
-  endOfDay.setHours(23, 59, 59, 999); // Set to the end of the current day
-
+  // get time clearing value
+  let clearTimeValue = document.getElementById('auto-clear-time').value
+  // convert from string to number
+  clearTimeValue = parseInt(clearTimeValue);
+  console.log(`Clear time value: ${clearTimeValue}`);
+  // schedule alarm every clearTimeValue 
   browser.alarms.create("clearTabsAlarm", {
-    when: endOfDay.getTime(),
-    periodInMinutes: 24 * 60,
+    when: Date.now(),
+    periodInMinutes: clearTimeValue
   });
 
   // set autoClear setting
   browser.storage.local.set({ autoClear: true });
-
-  console.log(`Scheduled recurring clear at end of day: ${endOfDay}`);
 }

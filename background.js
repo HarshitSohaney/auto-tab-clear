@@ -1,15 +1,18 @@
+// timeThreshold (ms)
+// exceptions (array of strings)
 function clearOldTabs(timeThreshold, exceptions) {
     const thresholdTime = Date.now() - timeThreshold;
-    console.log(`Clearing tabs older than: ${new Date(thresholdTime).toLocaleString()}`);
-    
+    console.log(`Clearing tabs older than ${new Date(thresholdTime).toLocaleString()}`);
+
     browser.tabs.query({})
       .then(tabs => {
         tabs.forEach(tab => {
           const url = new URL(tab.url);
           const domain = url.hostname;
-  
-          if (tab.lastAccessed < thresholdTime && !exceptions.includes(domain)) {
-            console.log(`Removing tab ID: ${tab.id}`);
+          
+          console.log(`Tab ${tab.url} ${new Date(tab.lastAccessed).toLocaleString()} ${tab.active}`);
+          if (tab.lastAccessed < thresholdTime && !exceptions.includes(domain) && !tab.active) {
+            console.log(`Removing tab`);
             browser.tabs.remove(tab.id);
           }
         });
@@ -27,8 +30,9 @@ browser.runtime.onMessage.addListener((message) => {
   
 browser.alarms.onAlarm.addListener((alarm) => {
     if (alarm.name === "clearTabsAlarm") {
-        browser.storage.local.get(["timeThreshold", "exceptions"]).then(data => {
-            clearOldTabs(data.timeThreshold, data.exceptions || []);
+      console.log("Alarm fired");
+        browser.storage.local.get(["autoClearTimeInMins", "exceptions"]).then(data => {
+            clearOldTabs(data.autoClearTimeInMins * 1000, data.exceptions || []);
         });
     }
 });
